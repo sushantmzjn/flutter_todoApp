@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/data/database.dart';
+import 'package:todo/utils/about_button.dart';
 import 'package:todo/utils/dialogbox.dart';
 import 'package:todo/utils/todo_tile.dart';
 
@@ -97,17 +98,31 @@ class _HomePageState extends State<HomePage> {
     db.updateDatabase();
   }
 
+  //about dialog
+  void aboutDialoge() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return MyAboutDialog();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff6998ab),
+      backgroundColor: const Color(0xff6998ab),
       appBar: AppBar(
         title: const Text('TO - DO'),
         centerTitle: true,
-        backgroundColor: Color(0xff06283d),
+        backgroundColor: const Color(0xff06283d),
         elevation: 0,
         actions: [
-          IconButton(onPressed: (() {}), icon: Icon(Icons.info_outline))
+          IconButton(
+            onPressed: aboutDialoge,
+            icon: const Icon(Icons.info_outline),
+            splashRadius: 25.0,
+            splashColor: Colors.green,
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
