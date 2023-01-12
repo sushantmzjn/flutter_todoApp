@@ -4,23 +4,23 @@ import 'package:todo/utils/button.dart';
 class DialogBox extends StatelessWidget {
   final controller;
   final String myHintText;
+
   VoidCallback onSave;
   VoidCallback onCancel;
 
-  DialogBox(
-      {Key? key,
-      required this.controller,
-      required this.myHintText,
-      required this.onCancel,
-      required this.onSave})
-      : super(key: key);
+  DialogBox({
+    Key? key,
+    required this.controller,
+    required this.myHintText,
+    required this.onCancel,
+    required this.onSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Color(0xff6998ab),
       content: Container(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.min,

@@ -25,14 +25,13 @@ class _HomePageState extends State<HomePage> {
     } else {
       db.loadData();
     }
-
     super.initState();
   }
 
   //text controller
   final _controller = TextEditingController();
 
-//check box tapped
+  //check box tapped
   void checkBoxChanged(bool? value, int index) {
     setState(() {
       db.toDoList[index][1] = !db.toDoList[index][1];
@@ -43,11 +42,19 @@ class _HomePageState extends State<HomePage> {
   //save a new task
   void saveNewTask() {
     setState(() {
-      db.toDoList.add([_controller.text, false]);
+      if (_controller.value.text.isNotEmpty) {
+        db.toDoList.add([_controller.text, false]);
+        Navigator.of(context).pop();
+        db.updateDatabase();
+      }
       _controller.clear();
     });
+  }
+
+  //cancel button
+  void cancelDialogBox() {
     Navigator.of(context).pop();
-    db.updateDatabase();
+    _controller.clear();
   }
 
   //create a new task
@@ -56,11 +63,10 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return DialogBox(
-          controller: _controller,
-          onSave: saveNewTask,
-          myHintText: 'New Task',
-          onCancel: () => Navigator.of(context).pop(),
-        );
+            controller: _controller,
+            onSave: saveNewTask,
+            myHintText: 'New Task',
+            onCancel: cancelDialogBox);
       },
     );
   }
@@ -82,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           controller: _controller,
           myHintText: db.toDoList[index][0],
           onSave: () => saveExistingTask(index),
-          onCancel: () => Navigator.of(context).pop(),
+          onCancel: cancelDialogBox,
         );
       },
     );
@@ -91,11 +97,13 @@ class _HomePageState extends State<HomePage> {
   // save existing habit
   void saveExistingTask(int index) {
     setState(() {
-      db.toDoList[index][0] = _controller.text;
+      if (_controller.value.text.isNotEmpty) {
+        db.toDoList[index][0] = _controller.text;
+        Navigator.of(context).pop();
+        db.updateDatabase();
+      }
       _controller.clear();
     });
-    Navigator.of(context).pop();
-    db.updateDatabase();
   }
 
   //about dialog
