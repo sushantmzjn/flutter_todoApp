@@ -46,6 +46,8 @@ class _HomePageState extends State<HomePage> {
         db.toDoList.add([_controller.text, false]);
         Navigator.of(context).pop();
         db.updateDatabase();
+      } else {
+        errorSnackBar();
       }
       _controller.clear();
     });
@@ -101,6 +103,8 @@ class _HomePageState extends State<HomePage> {
         db.toDoList[index][0] = _controller.text;
         Navigator.of(context).pop();
         db.updateDatabase();
+      } else {
+        errorSnackBar();
       }
       _controller.clear();
     });
@@ -152,6 +156,43 @@ class _HomePageState extends State<HomePage> {
             deleteFunction: (context) => deleteTask(index),
           );
         },
+      ),
+    );
+  }
+
+  //error snackBar
+  void errorSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Container(
+          padding: const EdgeInsets.all(16.0),
+          height: 55.0,
+          decoration: const BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Icon(
+                Icons.warning_amber,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'Text can\'t be Empty',
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        duration: const Duration(seconds: 3),
       ),
     );
   }
