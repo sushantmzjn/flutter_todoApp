@@ -145,18 +145,22 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        itemCount: db.toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoTile(
-            taskName: db.toDoList[index][0],
-            taskCompleted: db.toDoList[index][1],
-            onChanged: (value) => checkBoxChanged(value, index),
-            editFunction: (context) => editTask(index),
-            deleteFunction: (context) => deleteTask(index),
-          );
-        },
-      ),
+      body: db.toDoList.isEmpty
+          ? Center(
+              child: Text('Add a Todo List'.toUpperCase(),
+                  style: const TextStyle(fontSize: 18.0)))
+          : ListView.builder(
+              itemCount: db.toDoList.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  taskName: db.toDoList[index][0],
+                  taskCompleted: db.toDoList[index][1],
+                  onChanged: (value) => checkBoxChanged(value, index),
+                  editFunction: (context) => editTask(index),
+                  deleteFunction: (context) => deleteTask(index),
+                );
+              },
+            ),
     );
   }
 
