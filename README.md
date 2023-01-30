@@ -2,8 +2,8 @@
 
 flutter app using hive local storage
 
-feature
+features:-
 * add todo list
 * update todo list
 * delete todo list
-* check box for completed toda list task
+* check box for completed todo list task
