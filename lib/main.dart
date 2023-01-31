@@ -8,7 +8,11 @@ void main() async {
 
   //open a box
   var box = await Hive.openBox('mybox');
-  runApp(const MaterialApp(
+  runApp( MaterialApp(
+    theme: ThemeData(
+      fontFamily: 'Nunito',
+
+    ),
     debugShowCheckedModeBanner: false,
     home: Todo(),
   ));
