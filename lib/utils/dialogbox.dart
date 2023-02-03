@@ -4,7 +4,7 @@ import 'package:todo/utils/button.dart';
 class DialogBox extends StatelessWidget {
   final controller;
   final String myHintText;
-
+ String? errorTextmsg ;
   VoidCallback onSave;
   VoidCallback onCancel;
 
@@ -14,10 +14,12 @@ class DialogBox extends StatelessWidget {
     required this.myHintText,
     required this.onCancel,
     required this.onSave,
+     this.errorTextmsg
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       backgroundColor: const Color(0xffE1D7C6),
       content: Container(
@@ -29,17 +31,18 @@ class DialogBox extends StatelessWidget {
               maxLength: 24,
               controller: controller,
               decoration: InputDecoration(
+                errorText: errorTextmsg,
                   suffixIcon: IconButton(
                       onPressed: () {
                         controller.clear();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.clear,
                         color: Colors.black,
                       )),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black)),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.red)),
                   hintText: myHintText),
               maxLines: 1,

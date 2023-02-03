@@ -47,6 +47,8 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pop();
         db.updateDatabase();
       } else {
+        // _validate = true;
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         errorSnackBar();
       }
       _controller.clear();
@@ -58,13 +60,14 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
     _controller.clear();
   }
-
+  bool _validate = false;
   //create a new task
   void createNewTask() {
     showDialog(
       context: context,
       builder: (context) {
         return DialogBox(
+          errorTextmsg: _validate ? 'Value Can\'t Be Empty' : null,
             controller: _controller,
             onSave: saveNewTask,
             myHintText: 'New Task',
@@ -104,6 +107,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pop();
         db.updateDatabase();
       } else {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         errorSnackBar();
       }
       _controller.clear();
@@ -139,8 +143,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
-        backgroundColor: Color(0xff967E76),
-        child: Icon(
+        backgroundColor: const Color(0xff967E76),
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
@@ -148,7 +152,7 @@ class _HomePageState extends State<HomePage> {
       body: db.toDoList.isEmpty
           ? const Center(
               child:  Text('Add a Todo List',
-                  style: const TextStyle(fontSize: 18.0,color: Colors.white)))
+                  style: TextStyle(fontSize: 18.0,color: Colors.white)))
           : ListView.builder(
               itemCount: db.toDoList.length,
               itemBuilder: (context, index) {
@@ -196,7 +200,7 @@ class _HomePageState extends State<HomePage> {
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 1),
       ),
     );
   }
