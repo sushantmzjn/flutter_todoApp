@@ -60,20 +60,47 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
     _controller.clear();
   }
+
   bool _validate = false;
+
   //create a new task
   void createNewTask() {
     showDialog(
       context: context,
       builder: (context) {
         return DialogBox(
-          errorTextmsg: _validate ? 'Value Can\'t Be Empty' : null,
+            errorTextmsg: _validate ? 'Value Can\'t Be Empty' : null,
             controller: _controller,
             onSave: saveNewTask,
             myHintText: 'New Task',
             onCancel: cancelDialogBox);
       },
     );
+  }
+
+  //delete task dialog
+  void deleteTaskDialog(int index) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: const Color(0xffadcbd7),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(child: Text('Press Confirm to delete')),
+                ElevatedButton(
+                    onPressed: () {
+                      deleteTask(index);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Confirm'))
+              ],
+            ),
+          );
+        });
   }
 
   //delete task
@@ -151,8 +178,8 @@ class _HomePageState extends State<HomePage> {
       ),
       body: db.toDoList.isEmpty
           ? const Center(
-              child:  Text('Add a Todo List',
-                  style: TextStyle(fontSize: 18.0,color: Colors.white)))
+              child: Text('Add a Todo List',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white)))
           : ListView.builder(
               itemCount: db.toDoList.length,
               itemBuilder: (context, index) {
@@ -161,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                   taskCompleted: db.toDoList[index][1],
                   onChanged: (value) => checkBoxChanged(value, index),
                   editFunction: (context) => editTask(index),
-                  deleteFunction: (context) => deleteTask(index),
+                  deleteFunction: (context) => deleteTaskDialog(index),
                 );
               },
             ),
